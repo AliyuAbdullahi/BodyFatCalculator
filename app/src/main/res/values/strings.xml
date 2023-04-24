@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">MyBodyFatPercentage</string>
+    <string name="save">Save</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="weight">Weight</string>
+    <string name="select_gender_at_birth">Select your gender at birth</string>
+    <string name="measure_info">Remember to measure your weight before taking body fat measurement for better accuracy.</string>
+    <string name="last_reading">Most Recent Reading</string>
+    <string name="weight_used">Your weight was %1$skg </string>
+    <string name="body_fat_label">body fat</string>
+    <string name="date_taken">taken on %1$s</string>
+    <string name="body_fat_used">at %1$s\%% body fat</string>
+    <string name="body_fat_row_title">Body fat percentage: %1$s\%%</string>
+    <string name="body_fat_row_date">Taken on %1$s at %2$skg body weight</string>
+    <string name="create_new">Create New</string>
+    <string name="complete_the_fields">Complete the Fields </string>
+    <string name="calculate_reading">Calculate</string>
+    <string name="first_reading">First Reading</string>
+    <string name="second_reading">Second Reading</string>
+    <string name="third_reading">Third Reading</string>
+    <string name="done">Done</string>
+    <string name="ok">Ok</string>
+    <string name="reading_success_label">Your body fat is %1$s \%%</string>
+    <string name="new_input">Take New</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="your_readings">Your Readings</string>
+    <string name="empty_readings_screen_state">You don\'t have any saved readings</string>
+</resources>
