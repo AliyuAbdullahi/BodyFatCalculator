@@ -22,6 +22,9 @@
     <string name="second_reading">Second Reading</string>
     <string name="third_reading">Third Reading</string>
     <string name="done">Done</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_confirmation">Are you deleting current reading?</string>
     <string name="ok">Ok</string>
     <string name="reading_success_label">Your body fat is %1$s \%%</string>
     <string name="new_input">Take New</string>

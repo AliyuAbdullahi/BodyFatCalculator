@@ -7,6 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import com.lek.mybodyfatpercentage.homescreen.ui.componoent.ReadingsScreen
+import com.lek.mybodyfatpercentage.homescreen.ui.model.DeleteOneReadingClicked
+import com.lek.mybodyfatpercentage.homescreen.ui.model.DeleteReadingConfirmed
+import com.lek.mybodyfatpercentage.homescreen.ui.model.DialogDismissed
 import com.lek.mybodyfatpercentage.homescreen.ui.model.ReadingListState
 import com.lek.mybodyfatpercentage.theme.MyBodyFatPercentageTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,17 +23,22 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        viewModel.resume()
-
         setContent {
             MyBodyFatPercentageTheme {
                 ReadingsScreen(
                     viewModel.stateFlow.collectAsState(initial = ReadingListState()).value,
-                    onCreateReadingClicked = { startAddReadingScreen() }
+                    onCreateReadingClicked = { startAddReadingScreen() },
+                    onDeleteClicked = { viewModel.handleEvent(DeleteOneReadingClicked(it)) },
+                    onDeleteConfirmedClicked = { viewModel.handleEvent(DeleteReadingConfirmed) },
+                    onDeleteDialogDismissed = { viewModel.handleEvent(DialogDismissed) }
                 )
             }
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.resume()
     }
 
     private fun startAddReadingScreen() {

@@ -8,6 +8,8 @@ import com.lek.mybodyfatpercentage.homescreen.domain.usecase.DeleteBodyFatDataUs
 import com.lek.mybodyfatpercentage.homescreen.domain.usecase.GetBodyFatDataListStream
 import com.lek.mybodyfatpercentage.homescreen.ui.model.DeleteAllReadingsClicked
 import com.lek.mybodyfatpercentage.homescreen.ui.model.DeleteOneReadingClicked
+import com.lek.mybodyfatpercentage.homescreen.ui.model.DeleteReadingConfirmed
+import com.lek.mybodyfatpercentage.homescreen.ui.model.DialogDismissed
 import com.lek.mybodyfatpercentage.homescreen.ui.model.ReadingListEvent
 import com.lek.mybodyfatpercentage.homescreen.ui.model.ReadingListState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,22 +37,41 @@ class BodyFatDataListViewModel @Inject constructor(
 
     private fun deleteOne(timeAdded: Long) {
         viewModelScope.launch {
-            deleteBodyFatDataUseCase(timeAdded)
+            updateState {
+                copy(
+                    selected = state.readings.firstOrNull { it.date == timeAdded },
+                    isDeleteDialogShowing = true
+                )
+            }
+        }
+    }
+
+    private fun confirmDelete() {
+        viewModelScope.launch {
+            state.selected?.date?.let {
+                deleteBodyFatDataUseCase(it)
+            }
         }
     }
 
     private fun startWatchingReadings() {
         viewModelScope.launch {
             getBodyFatDataStream().collect {
-                updateState { copy(readings = it) }
+                updateState { copy(readings = it, isDeleteDialogShowing = false) }
             }
         }
+    }
+
+    private fun clearSelection() {
+        updateState { copy(selected = null, isDeleteDialogShowing = false) }
     }
 
     override fun handleEvent(event: ReadingListEvent) {
         when (event) {
             DeleteAllReadingsClicked -> deleteAllData()
             is DeleteOneReadingClicked -> deleteOne(event.timeAdded)
+            is DeleteReadingConfirmed -> confirmDelete()
+            DialogDismissed -> clearSelection()
         }
     }
 }

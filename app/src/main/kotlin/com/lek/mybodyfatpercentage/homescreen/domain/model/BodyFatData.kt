@@ -27,12 +27,20 @@ fun bodyFatFromString(string: String): BodyFatData {
     return BodyFatData(date, reading, bodyWeight)
 }
 
-fun bodyFatDataFromStringList(list: String): List<BodyFatData> =
-    if (list.isEmpty()) {
-        emptyList()
-    } else {
-        list.replace("[", "").replace("]", "")
-            .split(",").map { bodyFatFromString(it) }.filter { it.isValid }
+fun bodyFatDataFromStringList(list: String): List<BodyFatData> {
+    return when {
+        list.isEmpty() -> {
+            emptyList()
+        }
+        else -> {
+            val cleanString = list.replace("[", "").replace("]", "")
+            if (cleanString.isEmpty()) emptyList()
+            else
+                list.replace("[", "").replace("]", "")
+                    .split(",").map { bodyFatFromString(it) }.filter { it.isValid }
+        }
     }
+}
+
 
 fun bodyFatListToString(list: List<BodyFatData>): String = list.toString()
